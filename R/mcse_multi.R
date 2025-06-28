@@ -2,31 +2,31 @@
 ### Fast calculation of SVE estimators using Herberle et. al (2017)
 #####################################################################
 
-
-mSVEfft <- function (A, b, method = "bartlett")
-{
-  n <- nrow(A) # A must be centered matrix
-  p <- ncol(A)
-  w <- as.vector(lag(1:b, n = n, b = b, method = method)) # calculate lags
-  w <- c(1, w[1:(n-1)], 0, w[(n-1):1])  # starting steps from FFT paper
-  w <- Re(fftw_r2c(w))            
-  FF <- matrix(0, ncol = p, nrow = 2*n)  
-  FF[1:n,] <- A    
-  if(p > 1)  # multivariate
-  {
-    FF <- mvfftw_r2c (FF)        
-    FF <- FF * matrix(w, nrow = 2*n, ncol = p) 
-    FF <- mvfftw_c2r(FF) / (2* n ) 
-    return ((t(A) %*% FF[1:n, ]) / n )    
-  } else if(p == 1)  ##univariate calls
-  {
-    FF <- fftw_r2c (FF)        
-    FF <- FF * matrix(w, nrow = 2*n, ncol = p) 
-    FF <- fftw_c2r(FF) / (2* n ) 
-    return ((t(A) %*% FF[1:n]) / n )
-  }              
-
-}
+## AMR: comment this out for my use case.
+# mSVEfft <- function (A, b, method = "bartlett")
+# {
+#   n <- nrow(A) # A must be centered matrix
+#   p <- ncol(A)
+#   w <- as.vector(lag(1:b, n = n, b = b, method = method)) # calculate lags
+#   w <- c(1, w[1:(n-1)], 0, w[(n-1):1])  # starting steps from FFT paper
+#   w <- Re(fftw_r2c(w))            
+#   FF <- matrix(0, ncol = p, nrow = 2*n)  
+#   FF[1:n,] <- A    
+#   if(p > 1)  # multivariate
+#   {
+#     FF <- mvfftw_r2c (FF)        
+#     FF <- FF * matrix(w, nrow = 2*n, ncol = p) 
+#     FF <- mvfftw_c2r(FF) / (2* n ) 
+#     return ((t(A) %*% FF[1:n, ]) / n )    
+#   } else if(p == 1)  ##univariate calls
+#   {
+#     FF <- fftw_r2c (FF)        
+#     FF <- FF * matrix(w, nrow = 2*n, ncol = p) 
+#     FF <- fftw_c2r(FF) / (2* n ) 
+#     return ((t(A) %*% FF[1:n]) / n )
+#   }              
+# 
+# }
 
 
 
@@ -99,7 +99,8 @@ mSVEfft <- function (A, b, method = "bartlett")
 #' out <- BVN_Gibbs(n, mu, sigma)
 #' 
 #' mcse.bm <- mcse.multi(x = out)
-#' mcse.tuk <- mcse.multi(x = out, method = "tukey")
+#' # AMR: code disabled
+#' # mcse.tuk <- mcse.multi(x = out, method = "tukey")
 #' 
 #' # If we are only estimating the mean of the first component,
 #' # and the second moment of the second component
@@ -236,13 +237,15 @@ mcse.multi <- function(x, method = "bm", r=3, size = NULL, g = NULL, adjust = TR
     ## Bartlett or Tukey
     if((method == "bartlett") || (method == "tukey"))
     {
-      chain <- scale(chain, center = mu.hat, scale = FALSE)
-      init.mat <-  mSVEfft(A = chain, b = b, method = method)
-      sig.mat <- init.mat
-      if(r>1) 
-      {
-        sig.mat <- (1/(1-c))*init.mat - (c/(1-c))*mSVEfft(A = chain, b = floor(b/r), method = method)
-      }
+      ## AMR: comment this section out for my use case
+      stop("This code is disabled")
+      # chain <- scale(chain, center = mu.hat, scale = FALSE)
+      # init.mat <-  mSVEfft(A = chain, b = b, method = method)
+      # sig.mat <- init.mat
+      # if(r>1) 
+      # {
+      #   sig.mat <- (1/(1-c))*init.mat - (c/(1-c))*mSVEfft(A = chain, b = floor(b/r), method = method)
+      # }
     }
     adjust.used <- FALSE
     method.used <- paste("Lugsail ", method, " with r = ", r)

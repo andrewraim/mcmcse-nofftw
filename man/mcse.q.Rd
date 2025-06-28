@@ -59,7 +59,8 @@ mcse.q(x, 0.9, method = "obm")
 # Estimate E(x^2) with MCSE using spectral methods.
 
 g <- function(x) { x^2 }
-mcse(x, g = g, method = "tukey")
+# AMR: disable
+# mcse(x, g = g, method = "tukey")
 
 }
 \references{

@@ -72,7 +72,8 @@
 #' # Estimate E(x^2) with MCSE using spectral methods.
 #'
 #' g = function(x) { x^2 }
-#' mcse(x, g = g, method = "tukey")
+#' # AMR: disable
+#' # mcse(x, g = g, method = "tukey")
 #'
 #' @export
 
@@ -212,7 +213,8 @@ quant = function(input, q) { quantile(input, prob = q, type = 1, names = FALSE) 
 #' # Estimate E(x^2) with MCSE using spectral methods.
 #'
 #' g <- function(x) { x^2 }
-#' mcse(x, g = g, method = "tukey")
+#' # AMR: disable
+#' # mcse(x, g = g, method = "tukey")
 #'
 #' @export
 

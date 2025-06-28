@@ -83,6 +83,7 @@ ess(out)
 mcse.mat(out)
 
 mcse.bm <- mcse.multi(x = out)
-mcse.tuk <- mcse.multi(x = out, method = "tukey")
+# AMR: code disabled
+# mcse.tuk <- mcse.multi(x = out, method = "tukey")
 
 }

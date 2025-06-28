@@ -58,7 +58,8 @@ sigma <- matrix(c(1, 0.5, 0.5, 1), nrow = 2)
 out <- BVN_Gibbs(n, mu, sigma)
 
 mcse.bm <- mcse.multi(x = out)
-mcse.tuk <- mcse.multi(x = out, method = "tukey")
+# AMR: code disabled
+# mcse.tuk <- mcse.multi(x = out, method = "tukey")
 
 # If we are only estimating the mean of the first component,
 # and the second moment of the second component

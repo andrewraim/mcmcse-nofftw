@@ -15,10 +15,10 @@
 
 \documentclass[11pt]{article}
 
-%\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{Using mcmcse}
-%\VignettePackage{mcmcse}
-%\VignetteKeywords{Markov chain Monte Carlo, batch means}
+%\%VignetteEngine{knitr::knitr}
+%\%VignetteIndexEntry{Using mcmcse}
+%\%VignettePackage{mcmcse}
+%\%VignetteKeywords{Markov chain Monte Carlo, batch means}
 
 \usepackage{amsmath}
 \usepackage[sort,longnamesfirst]{natbib}
@@ -30,6 +30,7 @@
 
 
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 
 
 \maketitle
@@ -174,14 +175,16 @@ mcerror_obm <- mcse.multi(x = chain, method =  "obm", r = 1,
                          blather = TRUE)
 
 # Spectral variance estimator with Bartlett window
-mcerror_bart <- mcse.multi(x = chain, method =  "bartlett", r = 1,
-                           size = NULL, g = NULL, adjust = TRUE, 
-                           blather = TRUE)
+# (AMR: Disabled)
+# mcerror_bart <- mcse.multi(x = chain, method =  "bartlett", r = 1,
+#                           size = NULL, g = NULL, adjust = TRUE, 
+#                           blather = TRUE)
 
 # Spectral variance estimator with Tukey window
-mcerror_tuk <- mcse.multi(x = chain, method =  "tukey", r = 1,
-                          size = NULL, g = NULL, adjust = TRUE, 
-                          blather = TRUE)
+# (AMR: Disabled)
+# mcerror_tuk <- mcse.multi(x = chain, method =  "tukey", r = 1,
+#                          size = NULL, g = NULL, adjust = TRUE, 
+#                          blather = TRUE)
 
 # Initial sequence estimator, unadjusted
 mcerror_is <- mcse.initseq(x = chain, g = NULL, 
@@ -268,7 +271,8 @@ Using the function \texttt{confRegion} in the package, the user can create joint
 
 <<confRegion, out.height = '8cm'>>=
 plot(confRegion(mcerror_bm, which = c(1,2), level = .90), type = 'l', asp = 1)
-lines(confRegion(mcerror_bart, which = c(1,2), level = .90), col = "red")
+# (AMR: disabled code)
+# lines(confRegion(mcerror_bart, which = c(1,2), level = .90), col = "red")
 @
 
 \begin{itemize}
@@ -334,7 +338,8 @@ Since \texttt{ess} produces a different estimate for each component, conservativ
 multiESS(chain)
 
 # Using spectral variance estimators
-multiESS(chain, covmat = mcerror_bart$cov)
+# (AMR: disabled code)
+# multiESS(chain, covmat = mcerror_bart$cov)
 
 # Using initial sequence estimators
 # Since this is a conservative estimator, ess will be smaller
@@ -351,7 +356,8 @@ chain <- BVN_Gibbs(1e4, mu, sigma)
 multiESS(chain)
 
 # larger than 7529
-multiESS(chain, covmat = mcerror_bart$cov)
+# (AMR: disabled code)
+# multiESS(chain, covmat = mcerror_bart$cov)
 
 # larger than 7529
 multiESS(chain, covmat = mcerror_is$cov)
